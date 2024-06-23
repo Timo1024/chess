@@ -19,6 +19,7 @@ def main():
 
     # Game loop
     running = True
+    turn_over = False
     while running:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -46,6 +47,7 @@ def main():
                         if (y, x) in valid_moves:
                             game.board.execute_move(game.get_marked_square(), (x, y))
                             game.set_marked_square(None)
+                            turn_over = True
                             continue
 
                 # highlight the clicked square
@@ -53,7 +55,9 @@ def main():
                 pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(x * 100, y * 100, 100, 100))
 
         # Update the game state
-        game.update()
+        if turn_over:
+            game.update()
+            turn_over = False
 
         # Draw everything
         game.draw(screen)

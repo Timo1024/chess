@@ -6,11 +6,12 @@ class Game:
         self.board = Board()
         self.marked = None
         self.valid_moves = []
+        self.current_player = "white"
 
     def update(self):
         # Update the game state here
         # This could include things like checking for check/checkmate, moving pieces, etc.
-        pass
+        self.toggle_player()
 
     def draw(self, screen):
         # Draw the game state to the screen here
@@ -67,8 +68,14 @@ class Game:
 
     def set_marked_square(self, position):
         # Set the marked square to the given position
-        self.marked = position
-        self._set_possible_moves(position)
+        if position is None:
+            self.marked = None
+            self.valid_moves = []
+        else:
+            if self.board.board[position[1]][position[0]] is not None:
+                if self.board.board[position[1]][position[0]].get_color() == self.current_player:
+                    self.marked = position
+                    self._set_possible_moves(position)
 
     def get_marked_square(self):
         # Return the marked square
@@ -91,3 +98,9 @@ class Game:
     def get_possible_moves(self):
         # Return the possible moves for the marked square
         return self.valid_moves
+    
+    def toggle_player(self):
+        if self.current_player == "white":
+            self.current_player = "black"
+        else:
+            self.current_player = "white"
