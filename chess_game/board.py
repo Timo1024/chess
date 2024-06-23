@@ -46,4 +46,6 @@ class Board:
 
     def execute_move(self, start, end):
         # Move a piece from start to end
-        pass
+        piece = self.board[start[1]][start[0]]
+        self.board[start[1]][start[0]] = None
+        self.board[end[1]][end[0]] = piece
