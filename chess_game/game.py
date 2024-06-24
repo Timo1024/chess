@@ -7,6 +7,7 @@ class Game:
         self.marked = None
         self.valid_moves = []
         self.current_player = "white"
+        self.last_move = None
 
     def update(self):
         # Update the game state here
@@ -104,3 +105,13 @@ class Game:
             self.current_player = "black"
         else:
             self.current_player = "white"
+
+    def set_last_move_en_passant(self, from_location, to_location):
+        for row in self.board.board:
+            for piece in row:
+                if piece is not None and piece.is_pawn():
+                    piece.set_en_passant(False)
+        if abs(from_location[1] - to_location[1]) == 2:
+            if self.board.board[to_location[1]][to_location[0]].is_pawn():
+                self.board.board[to_location[1]][to_location[0]].set_en_passant(True)
+                print("En passant set for ", to_location)

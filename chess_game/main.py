@@ -45,7 +45,17 @@ def main():
                     valid_moves = game.get_possible_moves()
                     if valid_moves is not None:
                         if (y, x) in valid_moves:
+                            # check if move is en passant to delete the captured pawn
+                            if game.board.board[y][x] is None and game.board.board[game.get_marked_square()[1]][x] is not None and game.board.board[game.get_marked_square()[1]][x].is_pawn() and abs(game.get_marked_square()[1] - y) == 1 and abs(game.get_marked_square()[0] - x) == 1:
+                                game.board.board[game.get_marked_square()[1]][x] = None
+
+                            # handle move when pawn reaches the end of the board
+
+
+
+                            
                             game.board.execute_move(game.get_marked_square(), (x, y))
+                            game.set_last_move_en_passant(game.get_marked_square(), (x, y))
                             game.set_marked_square(None)
                             turn_over = True
                             continue

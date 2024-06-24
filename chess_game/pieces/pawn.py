@@ -26,8 +26,10 @@ class Pawn(ChessPiece):
             if y > 0 and x < 7 and board[y - 1][x + 1] is not None and board[y - 1][x + 1].color != self.color:
                 moves.append((y - 1, x + 1))
             # En passant
-            if y == 3 and x > 0 and board[y][x - 1] is not None and board[y - 1][x - 1] is None and board[y][x - 1].color != self.color and board[y][x - 1].is_pawn() and board[y][x - 1].en_passant:
+            if y == 3 and x > 0 and board[y][x - 1] is not None and board[y - 1][x - 1] is None and board[y][x - 1].color != self.color and board[y][x - 1].en_passant:
                 moves.append((y - 1, x - 1))
+            if y == 3 and x < 7 and board[y][x + 1] is not None and board[y - 1][x + 1] is None and board[y][x + 1].color != self.color and board[y][x + 1].en_passant:
+                moves.append((y - 1, x + 1))
         else:
             # Black pawns move down
             if y < 7 and board[y + 1][x] is None:
@@ -43,6 +45,8 @@ class Pawn(ChessPiece):
             # En passant
             if y == 4 and x > 0 and board[y][x - 1] is not None and board[y + 1][x - 1] is None and board[y][x - 1].color != self.color and board[y][x - 1].is_pawn() and board[y][x - 1].en_passant:
                 moves.append((y + 1, x - 1))
+            if y == 4 and x < 7 and board[y][x + 1] is not None and board[y + 1][x + 1] is None and board[y][x + 1].color != self.color and board[y][x + 1].is_pawn() and board[y][x + 1].en_passant:
+                moves.append((y + 1, x + 1))
 
         return moves
 
